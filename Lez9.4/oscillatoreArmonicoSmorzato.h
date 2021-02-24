@@ -13,30 +13,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include "funzioneVettorialeBase.h"
 
-class pendolo : public funzioneVettorialeBase
+class oscillatoreArmonicoSmorzato : public funzioneVettorialeBase
 {
 private:
-	double l, A;
+	double _omega0, _omega, _alpha;
 
 public:
-	const double g = 9.8;
+	oscillatoreArmonicoSmorzato(double omega0, double omega, double alpha)
+		: _omega0(omega0), _omega(omega), _alpha(alpha) {}
 
-public:
-	pendolo(double l, double A)
-		: l(l), A(A) {}
+	double alpha() const { return _alpha; };
+	double omega() const { return _omega; };
+	double omega0() const { return _omega0; };
 
 	//virtual vettoreLineare eval(double x, const vettoreLineare &v) const = 0;
 	vettoreLineare eval(double t, const vettoreLineare &b) const override
 	{
-		vettoreLineare o(2);
-
 		auto theta = b.get(0);
 		auto vel = b.get(1);
 
-		auto acc = -g / l * sin(theta);
-
-		o[0] = vel; // theta
-		o[1] = acc; // velocità
+		vettoreLineare o(2);
+		o[0] = vel;
+		o[1] = -pow(_omega0, 2) * theta - _alpha * (vel + sin(_omega * t));
 
 		return o;
 	}
