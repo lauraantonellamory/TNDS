@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include <cmath>
 #include <cstddef>
+#include <iomanip>
 
 class randomGen
 {
@@ -37,7 +38,8 @@ public:
     // tratto da: Numerical Recipes
     a = 1664525;
     c = 1013904223;
-    m = pow(2, 32) - 1;
+    m = pow(2, 31);
+    seed = seed_;
     
     auto size = 10000;
 
@@ -53,47 +55,45 @@ public:
 		delete[] X;
 	}
 
-  void setA(unsigned int a_) 
-  {
-    a = a_;
-  }
+  void setA(unsigned int a_) { a = a_; }
 
-  void setC(unsigned int c_) 
-  {
-    c = c_;
-  }
+  void setC(unsigned int c_) {c = c_; }
 
-  void setM(unsigned int m_) 
-  {
-    m = m_;
-  }  
+  void setM(unsigned int m_) { m = m_; }  
 
   double rand()
   {
-
+    X[0]
   }
 
   // distribuzione uniforme
   double unif(double xmin, double xmax)
-  {
-
+  {    
+    return 1 / (xmax - xmin);
   }
-
+ 
   // distribuzione esponenziale
   double exp(double mean)
   {
-
+    double y = unif(0, 1);
+    double x = - mean * log(1 - y);
+    return x;
   }
 
   // distribuzione di Gauss Box-Muller
   double gaussBM(double mean, double sigma)
   {
-
+    double s = rand(unif(0,1));
+    double t = rand(unif(0,1));
+    double x = mean + sigma * sqrt(-2 * log(s)) * cos(2 * M_PI * t);
+    return x; 
   }
 
   // distribuzione di Gauss Accept-reject
   double gaussAR(double mean, double sigma)
   {
-
+    double s = rand(unif(0,1));
+    double t = rand(unif(0,1));
+    double x = a
   }
 };
