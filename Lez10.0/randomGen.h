@@ -12,18 +12,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <cstddef>
 #include <iomanip>
 
-#include "funzioneBase.h"
-
 class randomGen
 {
 private:
-  unsigned int a;
-  unsigned int c;
-  unsigned int m;  
-  unsigned int seed;  
+	unsigned int a;
+	unsigned int c;
+	unsigned int m;
+	unsigned int seed;
 
 public:
-  /* 
+	/* 
     tratto da https://it.wikipedia.org/wiki/Generatore_lineare_congruenziale
     Il generatore lineare congruenziale è un algoritmo per la generazione di numeri pseudo-casuali.
     Il generatore è definito ricorsivamente: X[i + 1] = (a * X[i] + c) % m
@@ -33,71 +31,77 @@ public:
     a: moltiplicatore; 0 < a < m
     c: incremento; 0 ≤ c < m
     X[0] = seed: seme; 0 ≤ X[0] < m
-  */
-  randomGen(unsigned int seed_)
-  {
-    // tratto da: Numerical Recipes
-    a = 1664525;
-    c = 1013904223;
-    m = pow(2, 31);
-    seed = seed_;
+  	*/
+	randomGen(unsigned int seed_)
+	{
+		// tratto da: Numerical Recipes
+		a = 1664525;
+		c = 1013904223;
+		m = pow(2, 31);
+		seed = seed_;
+	}
 
-  }
-    
-  void setA(unsigned int a_) { a = a_; }
+	void setA(unsigned int a_) { a = a_; }
 
-  void setC(unsigned int c_) {c = c_; }
+	void setC(unsigned int c_) { c = c_; }
 
-  void setM(unsigned int m_) { m = m_; }  
+	void setM(unsigned int m_) { m = m_; }
 
-  double rand()
-  {
-  seed = (a * seed + c) % m;
-  return seed / double m;
-  }
+	double rand()
+	{
+		double m_ = m;
 
-  // distribuzione uniforme
-  double unif(double xmin, double xmax)
-  {    
-    double x =  rand();
-    return (xmin + (xmax - xmin) * x);
-  }
- 
-  // distribuzione esponenziale
-  double exp(double mean)
-  {
-    double y = rand();
-    double x = - (1/mean) * log(1 - y);
-    return x;
-  }
+		seed = (a * seed + c) % m;
 
-  // distribuzione di Gauss Box-Muller
-  double gaussBM(double mean, double sigma)
-  {
-    double s = rand();
-    double t = rand();
-    double x = mean + sigma * sqrt(-2 * log(s)) * cos(2 * M_PI * t);
-    return x; 
-  }
+		return seed / m_;
+	}
 
-  // distribuzione di Gauss Accept-reject
-  double gaussAR(double mean, double sigma)
-  {
-    gaussiana *G = new gaussiana (mean, sigma);
-    double x =  unif(mean - 5 * sigma, mean + 5 * sigma);
-    //double fmax = G->eval(mean);
-    double fmax = 1./sqrt(2. * M_PI * sigma * sigma);
-    double y = fmax * rand();
-    double fx = G->eval(x);
+	// distribuzione uniforme
+	double unif(double xmin, double xmax)
+	{
+		double x = rand();
 
-    while (y > fx) 
-    {
-    x = unif(mean - 5 * sigma, mean + 5 * sigma);
-    y = fmax * rand();
-    fx = G->eval(x);
-    }
-    
-     return x;
-     
-  }
+		return (xmin + (xmax - xmin) * x);
+	}
+
+	// distribuzione esponenziale
+	double exp(double mean)
+	{
+		double y = rand();
+		double x = -(1 / mean) * log(1 - y);
+
+		return x;
+	}
+
+	// distribuzione di Gauss Box-Muller
+	double gaussBM(double mean, double sigma)
+	{
+		double s = rand();
+		double t = rand();
+		double x = mean + sigma * sqrt(-2 * log(s)) * cos(2 * M_PI * t);
+
+		return x;
+	}
+
+	// distribuzione di Gauss Accept-reject
+	double gaussAR(double mean, double sigma)
+	{
+		auto ok = false;
+		double x, y, yMax, fx;
+
+		yMax = 1. / sqrt(2. * M_PI * sigma * sigma);
+
+		while (!ok)
+		{
+			x = unif(mean - 5. * sigma, mean + 5. * sigma);
+			y = rand() * yMax;
+
+			fx = gaussBM(mean, sigma);
+
+			if (fx >= y)
+				ok = true;
+		}
+
+		return x;
+	}
 };
