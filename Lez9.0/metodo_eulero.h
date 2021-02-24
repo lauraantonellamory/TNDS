@@ -8,16 +8,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
+#include <cmath>
+
 #include "vettoreLineare.h"
 #include "equazioneDifferenzialeBase.h"
 
 class metodo_eulero : public equazioneDifferenzialeBase
 {
 public:
-	virtual vettoreLineare passo(double t, const vettoreLineare &x, double h, funzioneVettorialeBase *f) const override
+	virtual void passo(double t, vettoreLineare &b, double h, funzioneVettorialeBase *f) const override
 	{
-		auto b = f->eval(t + h, x);
+		auto o = f->eval(t + h, b); //o: vel,acc
 
-		return b;
+		b[0] += o[0] * h; // posizione += v * h
+		b[1] += o[1] * h; // velocità += a * h
 	}
 };

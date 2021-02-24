@@ -26,28 +26,29 @@ int main(int argc, char **argv)
 		double tmax = 70;
 		double h = atof(argv[1]);
 		size_t steps = tmax / h + 0.5;
+		double omega0 = 1;
 
 		metodo_eulero eulero;
-		auto oscillatore_armonico = new oscillatoreArmonico(1);
+		auto oscillatore_armonico = new oscillatoreArmonico(omega0);
 
-		vettoreLineare x(2);
-		x[0] = 0;
-		x[1] = 1;
+		vettoreLineare o(2);
+		o[0] = 0; // pos 1D
+		o[1] = 1; // velocità
 
 		TApplication app("Metodo di Eulero", 0, 0);
 		auto graph = new TGraph();
 
 		for (size_t step = 0; step < steps; step++)
 		{
-			graph->SetPoint(step, t, x[0]);
+			graph->SetPoint(step, t, o[0]); // posizione in funzione di t
 
 			cout
 				<< t << " "
-				<< x[0] << ", " << x[1]
+				<< o[0] << ", " << o[1] // pos, velocità
 				<< endl;
 
-			//eulero funziona per riferimento di x, x viene aggiornata ad ogni chiamata di passo direttamente in memoria
-			eulero.passo(t, x, h, oscillatore_armonico);
+			// o passato per riferimento in memoria
+			eulero.passo(t, o, h, oscillatore_armonico);
 			t += h;
 		}
 

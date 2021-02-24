@@ -22,10 +22,16 @@ public:
 		: omega0(omega0_) {}
 
 	//virtual vettoreLineare eval(double x, const vettoreLineare &v) const = 0;
-	vettoreLineare eval(double t, const vettoreLineare &x) const override
+	vettoreLineare eval(double t, const vettoreLineare &b) const override
 	{
-		vettoreLineare c;
+		vettoreLineare o(2);
 
-		return c;
+		// posizione nuova = velocità precedente
+		o[0] = b.get(1);
+
+		// velocità nuova = -omega^2 * posizione precedente
+		o[1] = -pow(omega0, 2) * b.get(0);
+
+		return o;
 	}
 };

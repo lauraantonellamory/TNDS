@@ -14,5 +14,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 class equazioneDifferenzialeBase
 {
 public:
-	virtual vettoreLineare passo(double t, const vettoreLineare &a, double h, funzioneVettorialeBase *f) const = 0;
+	virtual void passo(double t, vettoreLineare &a, double h, funzioneVettorialeBase *f) const = 0;
 };
