@@ -8,8 +8,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
-class funzioneBase
+#include <cstddef>
+
+class funzioni
 {
 public:
-	virtual double eval(double x) const = 0;
+	// statistica
+	double media(double *vettore, const size_t dimensione);
+
+	double mediana(double *vettore, const size_t dimensione);
+
+	double varianza(double *vettore, const size_t dimensione, double media_);
+
+	// algoritmi
+	void ordina(double *vettore, const size_t dimensione);
+
+	// strumenti
+	void print(double *vettore, const size_t dimensione);
 };

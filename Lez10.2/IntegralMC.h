@@ -8,24 +8,56 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
+#include <iostream>
+
 #include "funzioneBase.h"
 #include "randomGen.h"
 
-class integralMC {
- 
-  private:
-  randomGen *myrand;
-  funzioneBase *f;
+using namespace std;
 
-  public:
-  integralMC(unsigned int seed)
-  {
-    myrand_ = new randomGen(seed);
-  }
-  
-  //~integralMC();
+class IntegralMC
+{
+private:
+	RandomGen *m_myrand;
 
-  double integraleHoM(double xmin, double xmax, double fmax, funzioneBase *f_, int punti);
-  double integraleAVE(double xmin, double xmax, funzioneBase *f_, int punti);
+public:
+	IntegralMC(unsigned int seed)
+	{
+		m_myrand = new RandomGen(seed);
+	};
 
+	//metodo per hitormiss
+	double IntegraleHoM(double xmin, double xmax, double fmax, funzioneBase *f, int punti)
+	{
+		double x, y;
+		double step = 0;
+		double a = min(xmin, xmax);
+		double b = max(xmin, xmax);
+		double sign = (a > b ? -1 : 1);
+
+		for (size_t i = 0; i < punti; i++)
+		{
+			x = m_myrand->Unif(a, b);
+			y = m_myrand->Unif(0, fmax);
+
+			if (f->Eval(x) > y)
+				step++;
+		}
+
+		return sign * (b - a) * fmax * step / punti;
+	}
+
+	//calcolo dell'integrale con il metodo della media
+	double IntegraleAVE(double xmin, double xmax, FunzioneBase *f, int punti)
+	{
+		double a = min(xmin, xmax);
+		double b = max(xmin, xmax);
+		double sign = (a > b ? -1 : 1);
+		double sum = 0.;
+
+		for (size_t i = 0; i < punti; i++)
+			sum += f->Eval(m_myrand->Unif(a, b));
+
+		return sign * (b - a) * (sum / punti);
+	}
 };

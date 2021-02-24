@@ -8,8 +8,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
-class funzioneBase
+#include <algorithm>
+#include <cmath>
+
+#include "funzioneBase.h"
+
+class seno : public funzioneBase
 {
 public:
-	virtual double eval(double x) const = 0;
+	double eval(double x) const override
+	{
+		return sin(x);
+	}
 };
