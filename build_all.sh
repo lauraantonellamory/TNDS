@@ -1,0 +1,20 @@
+#!/bin/bash
+clear;
+make -C Lez1;
+make -C Lez2;
+make -C Lez3.0;
+make -C Lez3.1;
+make -C Lez3.2;
+make -C Lez5.0;
+make -C Lez5.1;
+make -C Lez5.2;
+make -C Lez5.3;
+make -C Lez6.0;
+make -C Lez6.2;
+make -C Lez7.0;
+make -C Lez7.1;
+make -C Lez7.2;
+make -C Lez7.3;
+make -C Lez8.0;
+make -C Lez8.1;
+make -C Lez8.2;
