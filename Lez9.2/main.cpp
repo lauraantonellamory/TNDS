@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include "vettoreLineare.h"
 #include "oscillatoreArmonico.h"
-#include "metodo_eulero.h"
+#include "metodo_runge_kutta.h"
 
 using namespace std;
 
@@ -28,15 +28,16 @@ int main(int argc, char **argv)
 		size_t steps = tmax / h + 0.5;
 		double omega0 = 1;
 
-		metodo_eulero eulero;
+		metodo_runge_kutta runge_kutta;
 		auto oscillatore_armonico = new oscillatoreArmonico(omega0);
 
 		vettoreLineare o(2);
 		o[0] = 0; // pos 1D
 		o[1] = 1; // velocità
 
-		TApplication app("Metodo di Eulero", 0, 0);
+		TApplication app("Metodo di Runge-Kutta", 0, 0);
 		auto graph = new TGraph();
+		graph->SetTitle("Metodo di Runge-Kutta;t [s];x [m]");
 
 		for (size_t step = 0; step < steps; step++)
 		{
@@ -48,7 +49,7 @@ int main(int argc, char **argv)
 				<< endl;
 
 			// o passato per riferimento in memoria
-			eulero.passo(t, o, h, oscillatore_armonico);
+			runge_kutta.passo(t, o, h, oscillatore_armonico);
 			t += h;
 		}
 

@@ -37,6 +37,7 @@ int main(int argc, char **argv)
 
 		TApplication app("Metodo di Eulero", 0, 0);
 		auto graph = new TGraph();
+		graph->SetTitle("Metodo di Eulero;t [s];x [m]");
 
 		for (size_t step = 0; step < steps; step++)
 		{

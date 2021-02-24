@@ -52,17 +52,6 @@ public:
 		return m;
 	}
 
-	// prodotto vettoriale
-	vettoreLineare operator*(const double s) const
-	{
-		vettoreLineare m(size());
-
-		for (size_t i = 0; i < size(); i++)
-			m[i] = s * get(i);
-
-		return m;
-	}
-
 	// prodotto scalare
 	double operator*(const vettoreLineare &b) const
 	{
@@ -73,5 +62,16 @@ public:
 				s += get(i) * b.get(i);
 
 		return s;
+	}
+
+	// prodotto vettoriale
+	vettoreLineare operator*(const double s) const
+	{
+		vettoreLineare m(size());
+
+		for (size_t i = 0; i < size(); i++)
+			m[i] = s * get(i);
+
+		return m;
 	}
 };

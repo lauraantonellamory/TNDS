@@ -13,15 +13,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "vettoreLineare.h"
 #include "equazioneDifferenzialeBase.h"
 
-class metodo_eulero : public equazioneDifferenzialeBase
+class metodo_runge_kutta : public equazioneDifferenzialeBase
 {
 public:
 	virtual void passo(double t, vettoreLineare &b, double h, funzioneVettorialeBase *f) const override
 	{
-		//auto o = f->eval(t + h, b); //o: vel,acc
-		auto o = f->eval(t, b); //o: vel,acc
+		//f->eval() : (0, 1)
+		//f->eval() : (x, v)
 
-		b[0] += o[0] * h; // posizione += v * h
-		b[1] += o[1] * h; // velocità += a * h
+		auto k1 = f->eval(t, b);
+
+		auto k2 = f->eval(t + h * 0.5, b + k1 * h * 0.5);
+
+		auto k3 = f->eval(t + h * 0.5, b + k2 * h * 0.5);
+
+		auto k4 = f->eval(t + h, b + k3 * h);
+
+		b[0] += (k1[0] + 2. * k2[0] + 2. * k3[0] + k4[0]) * h / 6.;
+		b[1] += (k1[1] + 2. * k2[1] + 2. * k3[1] + k4[1]) * h / 6.;
 	}
 };
