@@ -12,9 +12,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <string>
 #include <vector>
 
-#include "TH1F.h"
-#include "TApplication.h"
-#include "TCanvas.h"
+#include "root/TH1F.h"
+#include "root/TApplication.h"
+#include "root/TCanvas.h"
 
 using namespace std;
 
