@@ -8,4 +8,4 @@ LIBS:=`root-config --libs`
 INCS:=`root-config --cflags`
 
 main: main.cpp
-	g++ main.cpp -o p100.exe ${INCS} ${LIBS}
+	g++ main.cpp -o p102.exe ${INCS} ${LIBS}
