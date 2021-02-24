@@ -21,16 +21,16 @@ private:
 public:
 	// costruttore con dimensione
 	vettore(const size_t dimensione) : dimensione(dimensione)
-  {
-    elementi = new double[dimensione];
-  }
+	{
+		elementi = new double[dimensione];
+	}
 
 	// distruttore
 	~vettore()
-  {
-  	// con le [] perché è un array
-	  delete[] elementi;
-  }
+	{
+		// con le [] perché è un array
+		delete[] elementi;
+	}
 
 	size_t size() const { return dimensione; }
 
@@ -39,8 +39,8 @@ public:
 	// modifica la componente i-esima
 	double &operator[](const size_t indice) { return elementi[indice]; }
 
-  double get(const size_t indice) const { return elementi[indice]; }
-  void set(const size_t indice, double v) { elementi[indice] = v; }
+	double get(const size_t indice) const { return elementi[indice]; }
+	void set(const size_t indice, double v) { elementi[indice] = v; }
 
 public:
 	void scambia(const size_t indice_A, const size_t indice_B);

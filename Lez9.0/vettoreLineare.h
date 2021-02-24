@@ -15,66 +15,65 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 using namespace std;
 
-class vettoreLineare : public vettore 
+class vettoreLineare : public vettore
 {
 private:
-  bool controlla_stesse_dimensioni(size_t n)
-  {
-    auto ok = (n == size());
-    
-    if (!ok)
-    {
-      cout 
-        << "Impossibile eseguire operazioni tra vettori di dimensionalità differenti"
-        << endl;
+	bool controlla_stesse_dimensioni(const vettoreLineare &b) const
+	{
+		auto ok = (b.size() == size());
 
-      exit(-2);
-    }
+		if (!ok)
+		{
+			cout
+				<< "Impossibile eseguire operazioni tra vettori di dimensionalità differenti"
+				<< endl;
 
-    return ok;
-  }
+			exit(-2);
+		}
+
+		return ok;
+	}
 
 public:
-  //vettoreLineare();
+	//vettoreLineare();
 
-  //vettore(const size_t dimensione)
-  vettoreLineare(const size_t dimensione) : vettore(dimensione) {}
+	//vettore(const size_t dimensione)
+	vettoreLineare(const size_t dimensione) : vettore(dimensione) {}
 
-  //~vettoreLineare();
+	//~vettoreLineare();
 
-  // addizione vettoriale
-  vettoreLineare operator+(const vettoreLineare &b) const
-  {
-    vettoreLineare me = *this;
+	// addizione vettoriale
+	vettoreLineare operator+(const vettoreLineare &b) const
+	{
+		vettoreLineare m(size());
 
-    if (controlla_stesse_dimensioni(b.size()))
-      for(size_t i = 0; i < size(); i++)
-        me[i] += b.get(i);
+		if (controlla_stesse_dimensioni(b))
+			for (size_t i = 0; i < size(); i++)
+				m[i] = get(i) + b.get(i);
 
-    return me;
-  }
+		return m;
+	}
 
-  // prodotto scalare
-  double operator*(const vettoreLineare &b) const
-  {
-    double s = 0;
+	// prodotto vettoriale
+	vettoreLineare operator*(const double s) const
+	{
+		vettoreLineare m(size());
 
-    if (controlla_stesse_dimensioni(b.size()))
-      for(size_t i = 0; i < size(); i++)
-        s += get(i) * b.get(i);
+		for (size_t i = 0; i < size(); i++)
+			m[i] = s * get(i);
 
-    return s;
-  }
+		return m;
+	}
 
-  // prodotto vettoriale
-  vettoreLineare operator*(const double s) const
-  {
-    vettoreLineare me = *this;
-    
-    for(size_t i = 0; i < size(); i++)
-      me[i] *= s;
+	// prodotto scalare
+	double operator*(const vettoreLineare &b) const
+	{
+		double s = 0;
 
-    return me;
-  }
+		if (controlla_stesse_dimensioni(b))
+			for (size_t i = 0; i < size(); i++)
+				s += get(i) * b.get(i);
 
+		return s;
+	}
 };
