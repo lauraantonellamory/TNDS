@@ -8,4 +8,4 @@ INCS = $(shell root-config --cflags)
 LIBS = $(shell root-config --libs)
 
 main: main.cpp
-	g++ main.cpp -o p90.exe $(INCS) $(LIBS)
+	g++ main.cpp -o p92.exe $(INCS) $(LIBS)
