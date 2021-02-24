@@ -35,12 +35,10 @@ private:
 	}
 
 public:
-	//vettoreLineare();
-
 	//vettore(const size_t dimensione)
 	vettoreLineare(const size_t dimensione) : vettore(dimensione) {}
 
-	//~vettoreLineare();
+	//~vettoreLineare(); // usiamo il distruttore di vettore.h
 
 	// addizione vettoriale
 	vettoreLineare operator+(const vettoreLineare &b) const

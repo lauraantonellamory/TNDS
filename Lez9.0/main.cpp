@@ -8,19 +8,56 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #include <iostream>
 
+#include "root/TApplication.h"
+#include "root/TCanvas.h"
+#include "root/TGraph.h"
+
 #include "vettoreLineare.h"
+#include "oscillatoreArmonico.h"
+#include "metodo_eulero.h"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-	if (argc == 1)
+	if (argc == 2)
 	{
-	
+		double t = 0;
+		double tmax = 70;
+		double h = atof(argv[1]);
+		size_t steps = tmax / h + 0.5;
+
+		metodo_eulero eulero;
+		auto oscillatore_armonico = new oscillatoreArmonico(1);
+
+		vettoreLineare x(2);
+		x[0] = 0;
+		x[1] = 1;
+
+		TApplication app("Metodo di Eulero", 0, 0);
+		auto graph = new TGraph();
+
+		for (size_t step = 0; step < steps; step++)
+		{
+			graph->SetPoint(step, t, x[0]);
+
+			cout
+				<< t << " "
+				<< x[0] << ", " << x[1]
+				<< endl;
+
+			//eulero funziona per riferimento di x, x viene aggiornata ad ogni chiamata di passo direttamente in memoria
+			eulero.passo(t, x, h, oscillatore_armonico);
+			t += h;
+		}
+
+		auto canvas = new TCanvas();
+		graph->Draw("AL");
+		app.Run();
 	}
 	else
 	{
-		cout << " Uso: " << argv[0] << " <steps> <e>" << endl;
+		cout << " Uso: " << argv[0] << " <steps>" << endl;
 	}
 
 	return 0;
