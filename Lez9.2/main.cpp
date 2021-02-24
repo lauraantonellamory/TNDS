@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		cout << " Uso: " << argv[0] << " <steps>" << endl;
+		cout << " Uso: " << argv[0] << " <h>" << endl;
 	}
 
 	return 0;

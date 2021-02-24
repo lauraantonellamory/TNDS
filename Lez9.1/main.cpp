@@ -36,6 +36,7 @@ int main(int argc, char **argv)
 		o[1] = 1; // velocità
 
 		TApplication app("Metodo di Eulero", 0, 0);
+
 		auto graph = new TGraph();
 		graph->SetTitle("Metodo di Eulero;t [s];x [m]");
 
@@ -59,7 +60,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		cout << " Uso: " << argv[0] << " <steps>" << endl;
+		cout << " Uso: " << argv[0] << " <h>" << endl;
 	}
 
 	return 0;
