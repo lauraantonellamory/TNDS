@@ -1,0 +1,3 @@
+wget https://root.cern/download/root_v6.22.02.Linux-ubuntu18-x86_64-gcc7.5.tar.gz
+tar -zxvf root_v6.22.02.Linux-ubuntu18-x86_64-gcc7.5.tar.gz
+source setup.sh
