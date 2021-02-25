@@ -34,8 +34,8 @@ int main()
 	double th1th2 = 0, n1n2 = 0, AB = 0;
 
 	TH1F hth0("theta0", "theta0", 100, (M_PI / 2.) - 5 * 0.3e-3, (M_PI / 2.) + 5 * 0.3e-3);
-	TH1F hth1("theta1", "theta1", 100, esp.Getth1Input() - 5 * 0.3e-3, esp.Getth1Input() + 5 * 0.3e-3);
-	TH1F hth2("theta2", "theta2", 100, esp.Getth2Input() - 5 * 0.3e-3, esp.Getth2Input() + 5 * 0.3e-3);
+	TH1F hth1("theta1", "theta1", 100, esp.th1Input() - 5 * 0.3e-3, esp.th1Input() + 5 * 0.3e-3);
+	TH1F hth2("theta2", "theta2", 100, esp.th2Input() - 5 * 0.3e-3, esp.th2Input() + 5 * 0.3e-3);
 
 	TH1F hddth1("d theta1", "d theta1", 100, -2. * 0.3e-3, 2. * 0.3e-3);
 	TH1F hddth2("d theta2", "d theta2", 100, -2. * 0.3e-3, 2. * 0.3e-3);
@@ -66,27 +66,27 @@ int main()
 	{
 		esp.Run();
 
-		hth0.Fill(esp.Getth0Misura());
-		hth1.Fill(esp.Getth1Misura());
-		hth2.Fill(esp.Getth2Misura());
+		hth0.Fill(esp.th0Misura());
+		hth1.Fill(esp.th1Misura());
+		hth2.Fill(esp.th2Misura());
 
-		hddth1.Fill((esp.Getth1Input() - esp.Getth0Input()) - (esp.Getth1Misura() - esp.Getth0Misura()));
+		hddth1.Fill((esp.th1Input() - esp.th0Input()) - (esp.th1Misura() - esp.th0Misura()));
 
-		hddth2.Fill((esp.Getth2Input() - esp.Getth0Input()) - (esp.Getth2Misura() - esp.Getth0Misura()));
+		hddth2.Fill((esp.th2Input() - esp.th0Input()) - (esp.th2Misura() - esp.th0Misura()));
 
-		hcorr_dth.Fill((esp.Getth1Input() - esp.Getth0Input()) - (esp.Getth1Misura() - esp.Getth0Misura()), (esp.Getth2Input() - esp.Getth0Input()) - (esp.Getth2Misura() - esp.Getth0Misura()));
+		hcorr_dth.Fill((esp.th1Input() - esp.th0Input()) - (esp.th1Misura() - esp.th0Misura()), (esp.th2Input() - esp.th0Input()) - (esp.th2Misura() - esp.th0Misura()));
 
-		th1th2 += ((esp.Getth1Input() - esp.Getth0Input()) - (esp.Getth1Misura() - esp.Getth0Misura())) * ((esp.Getth2Input() - esp.Getth0Input()) - (esp.Getth2Misura() - esp.Getth0Misura()));
+		th1th2 += ((esp.th1Input() - esp.th0Input()) - (esp.th1Misura() - esp.th0Misura())) * ((esp.th2Input() - esp.th0Input()) - (esp.th2Misura() - esp.th0Misura()));
 
-		hdn1.Fill(esp.Getn1Misura() - esp.Getn1Input());
-		hdn2.Fill(esp.Getn2Misura() - esp.Getn2Input());
-		hcorr_dn.Fill(esp.Getn1Misura() - esp.Getn1Input(), esp.Getn2Misura() - esp.Getn2Input());
-		n1n2 += (esp.Getn1Misura() - esp.Getn1Input()) * (esp.Getn2Misura() - esp.Getn2Input());
+		hdn1.Fill(esp.n1Misura() - esp.n1Input());
+		hdn2.Fill(esp.n2Misura() - esp.n2Input());
+		hcorr_dn.Fill(esp.n1Misura() - esp.n1Input(), esp.n2Misura() - esp.n2Input());
+		n1n2 += (esp.n1Misura() - esp.n1Input()) * (esp.n2Misura() - esp.n2Input());
 
-		hdA.Fill(esp.GetAMisura() - esp.GetAInput());
-		hdB.Fill(esp.GetBMisura() - esp.GetBInput());
-		hcorr_AB.Fill(esp.GetAMisura() - esp.GetAInput(), esp.GetBMisura() - esp.GetBInput());
-		AB += (esp.GetAMisura() - esp.GetAInput()) * (esp.GetBMisura() - esp.GetBInput());
+		hdA.Fill(esp.AMisura() - esp.AInput());
+		hdB.Fill(esp.BMisura() - esp.BInput());
+		hcorr_AB.Fill(esp.AMisura() - esp.AInput(), esp.BMisura() - esp.BInput());
+		AB += (esp.AMisura() - esp.AInput()) * (esp.BMisura() - esp.BInput());
 	}
 
 	th1th2 /= 10000;
