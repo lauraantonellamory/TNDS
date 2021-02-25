@@ -8,24 +8,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
-#include "FunzioneBase.h"
-#include "RandomGen.h"
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
-class IntegralMC
-{
-
-public:
-	IntegralMC(unsigned int seed)
-	{
-		m_myrand = new RandomGen(seed);
-	};
-
-	double IntegraleHoM(double xmin, double xmax, double fmax, FunzioneBase *f, int punti); //metodo per hitormiss
-	double IntegraleAVE(double xmin, double xmax, FunzioneBase *f, int punti);				//calcolo dell'integrale con il metodo della media
-
-private:
-	RandomGen *m_myrand;
-};
+double media(unsigned int, double *);
+double varianza(unsigned int, double *, double);
+double CalcolaMediana(char *, double *, unsigned int);
+double selection_sort(double *, unsigned int);
+double *ReadDataFromFile(char *, unsigned int);
+void Print(char *, double *, unsigned int);
+void Print(double *data, int size);
+void ScambiaByRef(double &, double &);

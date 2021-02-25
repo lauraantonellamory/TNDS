@@ -7,66 +7,142 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 #include <iostream>
-#include <cmath>
+#include <cstdlib>
+#include <fstream>
 
-#include "funzioni.hpp"
+#include "funzioni.h"
 
-double funzioni::mediana(double *vettore, const size_t dimensione)
+using namespace std;
+
+double media(unsigned int ndata, double *data)
 {
-	ordina(vettore, dimensione);
 
-	return vettore[dimensione / 2];
-}
-
-double funzioni::varianza(double *vettore, const size_t dimensione, double media_)
-{
-	double sommatoria = 0;
-
-	for (size_t i = 0; i < dimensione; i++)
-		sommatoria += pow(vettore[i] - media_, 2);
-
-	return sommatoria / double(dimensione - 1);
-}
-
-double funzioni::media(double *vettore, const size_t dimensione)
-{
-	double sommatoria = 0;
-
-	for (size_t i = 0; i < dimensione; i++)
-		sommatoria += vettore[i];
-
-	return sommatoria / double(dimensione);
-}
-
-// https://en.wikipedia.org/wiki/Insertion_sort
-void funzioni::ordina(double *vettore, const size_t dimensione)
-{
-	double x;
-	size_t i, j;
-
-	i = 1;
-
-	while (i < dimensione)
+	double media = 0;
+	for (int k = 0; k < ndata; k++)
 	{
-		x = vettore[i];
-		j = i - 1;
+		media += data[k];
+	}
+	media = media / double(ndata);
 
-		while (j >= 0 && vettore[j] > x)
+	return media;
+}
+
+double varianza(unsigned int ndata, double *data, double fmedia)
+{
+
+	double varianza = 0;
+	double quad = 0;
+
+	for (int i = 0; i < ndata; i++)
+	{
+		quad += (data[i] * data[i]);
+	}
+	double mediaquad = (quad / ndata);
+	varianza = mediaquad - ((fmedia) * (fmedia));
+
+	return varianza;
+}
+
+double CalcolaMediana(char *filename, double *vect, unsigned int size)
+{
+
+	double *vcopy = new double[size];
+
+	for (int i = 0; i < size; i++)
+	{
+		vcopy[i] = vect[i];
+	}
+
+	selection_sort(vcopy, size);
+
+	double fmediana = 0;
+
+	if (size % 2 == 0)
+	{
+		fmediana = ((vcopy[size / 2 + 1] + vcopy[size / 2]) / 2.);
+	}
+	else
+	{
+		fmediana = vcopy[size / 2];
+	}
+
+	Print(filename, vcopy, size);
+
+	delete[] vcopy;
+	return fmediana;
+}
+
+double selection_sort(double *vect, unsigned int size)
+{
+
+	for (unsigned int j = 0; j < size - 1; j++)
+	{
+
+		int imin = j;
+		double min = vect[imin];
+
+		for (unsigned int i = j + 1; i < size; i++)
 		{
-			vettore[j + 1] = vettore[j];
-			j--;
+			if (vect[i] < min)
+			{
+				min = vect[i];
+				imin = i;
+			}
 		}
-
-		vettore[j + 1] = x;
-		i++;
+		ScambiaByRef(vect[j], vect[imin]);
 	}
 }
 
-void funzioni::print(double *vettore, const size_t dimensione)
+double *ReadDataFromFile(char *filename, unsigned int size)
 {
-  for (size_t i = 0; i < dimensione; i++)
-    std::cout 
-      << i << "#: " 
-      << vettore[i]
-      << std::endl;
+
+	double *data = new double[size];
+
+	ifstream fin;
+	fin.open(filename);
+
+	if (fin.eof())
+	{
+		cout << "Errore nel caricamento dati!" << endl;
+		return NULL;
+	}
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		fin >> data[i];
+		cout << data[i] << endl;
+	}
+
+	fin.close();
+
+	return data;
+}
+
+void Print(char *filename, double *data, unsigned int size)
+{
+
+	ofstream fout(filename);
+
+	for (int i = 0; i < size; i++)
+	{
+		fout << data[i] << endl;
+	}
+
+	fout.close();
+}
+
+void Print(double *data, int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+		cout << data[i] << endl;
+	}
+}
+
+void ScambiaByRef(double &a, double &b)
+{
+	double c = a;
+	a = b;
+	b = c;
 }

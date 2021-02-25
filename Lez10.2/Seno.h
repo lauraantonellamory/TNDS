@@ -9,23 +9,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #pragma once
 
 #include "FunzioneBase.h"
-#include "RandomGen.h"
-#include <iostream>
+#include <cmath>
 
-using namespace std;
-
-class IntegralMC
+class Seno : public FunzioneBase
 {
-
 public:
-	IntegralMC(unsigned int seed)
+	virtual double Eval(double x) const
 	{
-		m_myrand = new RandomGen(seed);
-	};
-
-	double IntegraleHoM(double xmin, double xmax, double fmax, FunzioneBase *f, int punti); //metodo per hitormiss
-	double IntegraleAVE(double xmin, double xmax, FunzioneBase *f, int punti);				//calcolo dell'integrale con il metodo della media
-
-private:
-	RandomGen *m_myrand;
+		return sin(x);
+	}
 };

@@ -8,24 +8,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 #pragma once
 
-#include "FunzioneBase.h"
-#include "RandomGen.h"
-#include <iostream>
-
-using namespace std;
-
-class IntegralMC
+class RandomGen
 {
-
 public:
-	IntegralMC(unsigned int seed)
-	{
-		m_myrand = new RandomGen(seed);
-	};
+	RandomGen(unsigned int); //costruttore
 
-	double IntegraleHoM(double xmin, double xmax, double fmax, FunzioneBase *f, int punti); //metodo per hitormiss
-	double IntegraleAVE(double xmin, double xmax, FunzioneBase *f, int punti);				//calcolo dell'integrale con il metodo della media
+	void setA(unsigned int a_) { a = a_; }
+
+	void setC(unsigned int c_) { c = c_; }
+
+	void setM(unsigned int m_) { m = m_; }
+
+	double Rand();
+	double Unif(double xmin, double xmax);			  //distribuzione uniforme
+	double Exp(double mean);						  //distribuzione esponenziale
+	double GaussBoxMuller(double mean, double sigma); //gauss con BOXMULLER
+	double GaussAR(double mean, double sigma);		  //gauss ACCEPTREJECT
 
 private:
-	RandomGen *m_myrand;
+	unsigned int a;
+	unsigned int c;
+	unsigned int m;
+	unsigned int seed;
 };
