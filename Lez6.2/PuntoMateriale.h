@@ -1,30 +1,27 @@
-#ifndef __PuntoMateriale_h__
-#define __PuntoMateriale_h__
+/*
+MIT License
 
+Copyright (c) 2019 Laura Antonella Mory
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+#pragma once
 
 #include "Particella.h"
 #include "Posizione.h"
 
 #include "CampoVettoriale.h"
 
-class PuntoMateriale : public Particella, Posizione {//campo vettoriale è figlia della classe posizione quindi se 
-
-	public:
-	
-	PuntoMateriale(double massa, double raggio, double carica, const Posizione&);
-	PuntoMateriale(double massa, double raggio, double carica, double x, double y, double z);
-	~PuntoMateriale() { };
-
-	
-	CampoVettoriale CampoElettrico(const Posizione&) const;
-	CampoVettoriale CampoGravitazionale(const Posizione&) const;
-
-	//potevo scriverle in Posizione?? Dato un punto materiale con una determinata posizione si può a livello logico astrarre il concetto di sorgente del campo in un'unica classe "Punto Materiale". No, sono dei metodi di puntomateriale che restituiscono un oggetto di tipo CampoVettoriale (costruendoli).
-
-	protected:
-
+class PuntoMateriale : public Particella, Posizione
+{
+protected:
 	double m_raggio;
 
-};
+public:
+	PuntoMateriale(double massa, double raggio, double carica, const Posizione &);
+	PuntoMateriale(double massa, double raggio, double carica, double x, double y, double z);
 
-#endif // __PuntoMateriale_h__
+	CampoVettoriale CampoElettrico(const Posizione &) const;
+	CampoVettoriale CampoGravitazionale(const Posizione &) const;
+};

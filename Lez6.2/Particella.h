@@ -1,71 +1,57 @@
-#ifndef __Particella_h__
-#define __Particella_h__
+/*
+MIT License
+
+Copyright (c) 2019 Laura Antonella Mory
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+#pragma once
+
+#include <iostream>
 
 #include "Posizione.h"
-#include <iostream>
+
 using namespace std;
 
-class Particella{
-
-public:
-
-//costruttori
-Particella();
-Particella(double massa, double carica);
-//distruttore
-~Particella();
-
-//metodi
-double GetMassa() const {return m_massa;}
-double GetCarica() const{return m_carica;}
-void Print() const;
-
+class Particella
+{
 protected:
-
-double m_massa;
-double m_carica;
-
-};
-
-
-class Elettrone : public Particella {//eredita con il massimo livello di visibilità ciò che c'è in particella. Se fosse stato protected, anche il public di particella sarebbe diventato protected
+	double m_massa;
+	double m_carica;
 
 public:
-//costruttore
-Elettrone();
-//distruttore
-~Elettrone();
-//
-void Print() const;
+	Particella();
+	Particella(double massa, double carica);
+
+	double GetMassa() const { return m_massa; }
+	double GetCarica() const { return m_carica; }
+	void Print() const;
 };
 
-class CorpoCeleste : public Particella {
-
+class Elettrone : public Particella
+{
 public:
-
-	//costruttori
-	CorpoCeleste();
-	CorpoCeleste(std::string nome, double massa, double raggio);
-
-	//distruttore
-	~CorpoCeleste();
-
-	//nuovi metodi
-	void SetNome(std::string nome) {m_nome=nome;}
-	void SetMassa(double massa) {m_massa=massa;}
-	void SetRaggio(double raggio) {m_raggio=raggio;}
-	std::string GetNome() const {return m_nome;}//tutto quello che viene elaborato dalla funzione non deve poter modificare le cose esterne alla funzione che vengono utilizzate (giusto?)
-	double GetRaggio() const {return m_raggio;}
+	Elettrone();
 
 	void Print() const;
+};
 
+class CorpoCeleste : public Particella
+{
 protected:
-
-	//nuovi data membri
 	std::string m_nome;
 	double m_raggio;
 
+public:
+	CorpoCeleste();
+	CorpoCeleste(std::string nome, double massa, double raggio);
+
+	void SetNome(std::string nome) { m_nome = nome; }
+	void SetMassa(double massa) { m_massa = massa; }
+	void SetRaggio(double raggio) { m_raggio = raggio; }
+	std::string GetNome() const { return m_nome; }
+	double GetRaggio() const { return m_raggio; }
+
+	void Print() const;
 };
-
-
-#endif
